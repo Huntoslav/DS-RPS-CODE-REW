@@ -25,10 +25,10 @@ function playRound(playerSelection){
         return `Its TIE you botch chose ${playerSelection}`
     } else if(choices[playerSelection] === computerSelection){
         playerScore++
-        return `You WON your ${playerSelection} beats computers ${computerSelection}`
+        return `You WON! your ${playerSelection} beats computers ${computerSelection}`
     } else {
         computerScore++
-        return `You lose! Your ${playerSelection} loses to computers ${computerSelection}`
+        return `You LOSE! Your ${playerSelection} loses to computers ${computerSelection}`
     }
 }
 
@@ -81,23 +81,28 @@ function countScore(){
     }
 }
 
-
 function gameOver(){
-    let text = `GAME OVER YOU `
-    if(playerScore >= 5 || computerScore >= 5){
-        document.querySelector(".result").innerHTML = ""
-        document.querySelector(".game-over").innerHTML = ""
-        if (playerScore > computerScore){
-            let player = document.createElement("p")
-            player.textContent = `${text} WIN!`
-            document.querySelector(".game-over").appendChild(player)
-        } else {
-            let computer = document.createElement("p")
-            computer.textContent = `${text} LOSE!`
-            document.querySelector(".game-over").appendChild(computer)
-        }
-    
+    if(playerScore === 5 || computerScore === 5){
+        let showGameOver = document.createElement("h2")
+        showGameOver.textContent = "GAME OVER"
+        document.querySelector(".game-over").appendChild(showGameOver)
+        newGame()
     }
+    
+}
 
+function newGame(){
+    let newGameButton = document.createElement("button")
+    newGameButton.id = "newGame"
+    newGameButton.textContent = "START NEW GAME"
+    document.querySelector(".game-over").appendChild(newGameButton)
+    newGameButton.addEventListener("click", function(e){
+        playerScore = 0
+        computerScore = 0
+        document.querySelector(".result").innerHTML =""
+        document.querySelector(".game-over").innerHTML = ""
+        document.querySelector(".score").innerHTML= ""
+    })
 
 }
+
