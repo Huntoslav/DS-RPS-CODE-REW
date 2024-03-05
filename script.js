@@ -18,18 +18,22 @@ const choices = {
 let playerScore = 0
 let computerScore = 0
 
+let gameFlagOver = false
+
+
 function playRound(playerSelection){
     let computerSelection = getComputerSelection()
 
-    if(playerSelection === computerSelection){
-        return `Its TIE you botch chose ${playerSelection}`
-    } else if(choices[playerSelection] === computerSelection){
-        playerScore++
-        return `You WON! your ${playerSelection} beats computers ${computerSelection}`
-    } else {
-        computerScore++
-        return `You LOSE! Your ${playerSelection} loses to computers ${computerSelection}`
-    }
+        if(playerSelection === computerSelection){
+            return `Its TIE you botch chose ${playerSelection}`
+        } else if(choices[playerSelection] === computerSelection){
+            playerScore++
+            return `You WON! your ${playerSelection} beats computers ${computerSelection}`
+        } else {
+            computerScore++
+            return `You LOSE! Your ${playerSelection} loses to computers ${computerSelection}`
+        }
+    
 }
 
 
@@ -52,14 +56,13 @@ let scissors = document.querySelector(".scissors").addEventListener("click", fun
 function game(result){
    let playGame =  playRound(result)
    document.querySelector(".result").innerHTML = ""
+   if(gameFlagOver === true){
+    return
+   }
    let showResult = document.createElement("p")
    showResult.textContent = playGame
    document.querySelector(".result").appendChild(showResult)
-
    countScore()
-   gameOver()
-
-
 }
 
 
@@ -79,11 +82,14 @@ function countScore(){
         startScore.id = "startScore"
         document.querySelector(".score").appendChild(startScore)
     }
+    gameOver()
 }
 
 function gameOver(){
     if(playerScore === 5 || computerScore === 5){
+        gameFlagOver = true
         let showGameOver = document.createElement("h2")
+        showGameOver.id = "showGameOver"
         showGameOver.textContent = "GAME OVER"
         document.querySelector(".game-over").appendChild(showGameOver)
         newGame()
@@ -102,6 +108,7 @@ function newGame(){
         document.querySelector(".result").innerHTML =""
         document.querySelector(".game-over").innerHTML = ""
         document.querySelector(".score").innerHTML= ""
+        gameFlagOver = false
     })
 
 }
